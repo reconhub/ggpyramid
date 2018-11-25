@@ -1,9 +1,34 @@
-# Age pyramid function
-ggpyramid <- 
-  function(data, age, sex, males = regex("1|^m", ignore_case = TRUE), females = regex("2|^f", ignore_case = TRUE), x_breaks, make_age_cat = TRUE) {
+#' Age pyramid using ggplot2
+#'
+#' This is where you put your description. Bla bla bla. Lines should not be more
+#' than 80 characters.
+#'
+#' @author Jonathan Polonsky \email{polonskyj@@who.int}.
+#'
+#' @export
+#'
+#' @import tidyverse
+#'
+#' @param data A `data.frame`.
+#'
+#' @param age ...
+#'
+#' @param sex ...
+#'
+#' @param males ...
+#'
+#' @param females ...
+#'
+#' @param x_breaks ...
+#'
+#' @param make_age_cat ...
+
+ggpyramid <- function(data, age, sex, males = regex("1|^m", ignore_case = TRUE),
+                      females = regex("2|^f", ignore_case = TRUE),
+                      x_breaks, make_age_cat = TRUE) {
     
-    age <- enquo(age)
-    sex <- enquo(sex)
+    age <- rlang::enquo(age)
+    sex <- rlang::enquo(sex)
     
     age_cat <- function(x, lower = 0, upper, by = 10, sep = "-", above.char = "+") {
       
@@ -51,8 +76,8 @@ ggpyramid <-
     
     ggplot(data) +
       aes(x = !!age, fill = Sex) +
-      geom_col(data = data %>% filter(Sex %in% "Male"), aes(y = n), alpha = .8) + 
-      geom_col(data = data %>% filter(Sex %in% "Female"), aes(y = -n), alpha = .8) +
+      geom_col(data = data %>% dplyr::filter(Sex %in% "Male"), aes(y = n), alpha = .8) + 
+      geom_col(data = data %>% dplyr::filter(Sex %in% "Female"), aes(y = -n), alpha = .8) +
       scale_x_discrete(drop = FALSE) +
       scale_y_continuous(
         breaks = y_axis_extent, 
