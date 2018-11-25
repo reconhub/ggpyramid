@@ -29,11 +29,11 @@
 #' age <- rgeom(1000, .1)
 #' sex <- sample(c("male", "female"), 1000, replace = TRUE)
 #' df <- data.frame(age, sex)
-#' ggpyramid(df, age = age, sex = sex, x_breaks = 5)
+#' ggpyramid(df, age = age, sex = sex, x_breaks = 50)
 
 ggpyramid <- function(data, age, sex,
-                      males = stringr::regex("1|^m", ignore_case = TRUE),
-                      females = stringr::regex("2|^f", ignore_case = TRUE),
+                      males = stringr::regex("1|^m.*", ignore_case = TRUE),
+                      females = stringr::regex("2|^f.*", ignore_case = TRUE),
                       x_breaks, make_age_cat = TRUE) {
   
   age <- rlang::enquo(age)
